@@ -1,7 +1,9 @@
 import os
 import sys
 import requests
+import subprocess
 from multiprocessing import Lock
+import shutil
 import threading
 from libs.SpawnProcesses import MyProcess
 from libs.ParseUrl import ParseUrl
@@ -14,6 +16,10 @@ class PyDownloader:
         self.dump_dir = '.' + name
         self.chunk_size = 64 * 1024         # Write these bytes at a time
         self.content_length = ParseUrl(url).extract_info()['content-length']
+
+        print('=-------------------------=')
+        print('Content-Length: ', self.content_length)
+        print('=-------------------------=')
 
         try:
             os.mkdir(self.dump_dir)
@@ -59,6 +65,8 @@ class PyDownloader:
             for file in sorted(map(int, os.listdir(self.dump_dir))):
                 with open(self.dump_dir + f'/{file}', 'rb') as r:
                     f.write(r.read())
+            subprocess.call(['notify-send', f'Download Complete: {name}'])
+        shutil.rmtree(self.dump_dir)
 
     def handler(self, name):
         while True:

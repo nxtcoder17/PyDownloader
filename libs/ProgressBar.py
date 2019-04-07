@@ -26,7 +26,7 @@ def generate(dir, total):
         # result += "#" * int(percentage // 2) + "." * int(50 - (percentage // 2))
         result += "]"
         if size() != total:
-            result += "({:3.2f} %) ".format(percentage)
+            result += "({:3.2f} %), ({:6.2f} MB) ".format(percentage, size()/1024/1024)
         elif (size() == total):
             result += "(100.00 %)"
         print(result, end='\r')
