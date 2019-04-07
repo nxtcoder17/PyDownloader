@@ -14,7 +14,7 @@ class PyDownloader:
     def __init__(self, url, name):
         self.url = url
         self.dump_dir = '.' + name
-        self.chunk_size = 64 * 1024         # Write these bytes at a time
+        self.chunk_size = 64 * 1024         # Write these many bytes at a time
         self.content_length = ParseUrl(url).extract_info()['content-length']
 
         print('=-------------------------=')
@@ -27,22 +27,6 @@ class PyDownloader:
         except FileExistsError:
             offsets = self.fix_already_downloaded()
             self.que = generate_queue(2*1024*1024, self.content_length, offsets)
-
-        # flag = False
-        # try:
-            # os.mkdir(self.dump_dir)
-            # self.que, list = TaskQueue(2*1024*1024, self.content_length).generate()
-        # except FileExistsError:
-            # flag = True
-            # # Already downloaded part
-            # # parse already downloaded parts and fix the issue WITHIN Existing QUEUE
-            # offsets = self.fix_already_downloaded()
-        # 
-            # self.que, list = TaskQueue(2*1024*1024, self.content_length).generate(offsets)
-        # self.que = TaskGenerator(2*1024*1024, self.content_length).generate()
-        # self.que = generat_queue(2*1024*1024, self.content_length, offsets)
-
-        # print(f"[Size of que: {len(self.que)})
 
         self.lock = Lock()
 
@@ -88,12 +72,6 @@ class PyDownloader:
                     pass
                 except KeyboardInterrupt:
                     pass
-                    # offset = os.path.getsize(f"{self.dump_dir}/{file}") % self.chunk_size
-                    # os.ftruncate(f.fileno(), f.seek(0, 2) - offset);
-                    # f.write(data)
-                    # f.close();
-                    # print("You Know, it is actually working !!!!!!!")
-                    # raise KeyboardInterrupt
                 finally:
                     f.write(data)
                     # print("Yeah! It is working!!!!!!!!!!!!!!!!!!!!!!!!!")
@@ -104,4 +82,5 @@ class PyDownloader:
             d[int(file)] = os.path.getsize(f'{self.dump_dir}/{file}')
         return d
 
-p = PyDownloader(sys.argv[1], sys.argv[2])
+if __name__ == '__main__':
+    p = PyDownloader(sys.argv[1], sys.argv[2])
