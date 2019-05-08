@@ -7,7 +7,7 @@ import shutil
 import threading
 from libs.SpawnProcesses import MyProcess
 from libs.ParseUrl import ParseUrl
-from libs.TaskQueue import generate_queue
+from libs.TaskQueue import generate_queue, singleton_queue
 from libs.ProgressBar import ProgressBar
 
 class PyDownloader:
@@ -17,16 +17,18 @@ class PyDownloader:
         self.chunk_size = 64 * 1024         # Write these many bytes at a time
         self.content_length = ParseUrl(url).extract_info()['content-length']
 
-        print('=-------------------------=')
-        print('Content-Length: ', self.content_length)
-        print('=-------------------------=')
-
-        try:
-            os.mkdir(self.dump_dir)
-            self.que = generate_queue(2*1024*1024, self.content_length, None)
-        except FileExistsError:
-            offsets = self.fix_already_downloaded()
-            self.que = generate_queue(2*1024*1024, self.content_length, offsets)
+        if self.content_length is None:
+            # Content-Length Header Unknown, can't multi process the download, 
+            # then doing it the old-school way
+            self.que = singleton_queue()
+            os.mkdir (self.dump_dir)
+        else:
+            try:
+                os.mkdir(self.dump_dir)
+                self.que = generate_queue(2*1024*1024, self.content_length, None)
+            except FileExistsError:
+                offsets = self.fix_already_downloaded()
+                self.que = generate_queue(2*1024*1024, self.content_length, offsets)
 
         self.lock = Lock()
 
@@ -58,7 +60,7 @@ class PyDownloader:
                 self.lock.acquire()
                 item = self.que.get(block = False)
                 self.lock.release()
-                print(f"[THREAD] {name}: popped {item} from QUEUE")
+                # print(f"[THREAD] {name}: popped {item} from QUEUE")
 
                 self.worker(item)
             else:

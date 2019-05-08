@@ -7,8 +7,9 @@ class ParseUrl:
     def extract_info(self):
         response = requests.get(self.url,  stream=True)
         data = dict()
-        for key in response.headers:
-            if key.lower() == 'content-length':
-                data['content-length'] = int(response.headers['content-length'])
+        try:
+            data['content-length'] = int (response.headers['content-length'])
+        except KeyError:
+            data['content-length'] = None
 
         return data

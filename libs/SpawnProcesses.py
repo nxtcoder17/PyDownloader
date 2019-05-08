@@ -11,14 +11,14 @@ class MyProcess(multiprocessing.Process):
 
     def run(self):
         lock.acquire()
-        print(f"Starting PROCESS {self.name}")
+        # print(f"Starting PROCESS {self.name}")
         lock.release()
 
         # call to a handler function
         self.handler(self.name)
 
         lock.acquire()
-        print(f"Finishing PROCESS {self.name}")
+        # print(f"Finishing PROCESS {self.name}")
         lock.release()
 
 
