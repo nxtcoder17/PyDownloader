@@ -10,16 +10,16 @@ class MyProcess(multiprocessing.Process):
         self.handler = handler
 
     def run(self):
-        lock.acquire()
+        # lock.acquire()
         # print(f"Starting PROCESS {self.name}")
-        lock.release()
+        # lock.release()
 
         # call to a handler function
         self.handler(self.name)
 
-        lock.acquire()
+        # lock.acquire()
         # print(f"Finishing PROCESS {self.name}")
-        lock.release()
+        # lock.release()
 
 
 
