@@ -6,15 +6,15 @@ Python based **File Downloader**.<br/>
 It makes use of Python's Multiprocessing features to make sure
 you get your file downloaded, faster than other downloaders.
 
-* **Requirements**
-    >> Python Requests
+* **Requirements** <br/>
+    _Python Requests_
 
-- **Installing requests**
-    >> `pip install requests` should do installation of Python Requests
+- **Installing requests**<br/>
+    `pip install requests` should do installation of Python Requests
 
 ### Executing the Downloader
-- Cloning it in your $HOME <br/>
-`git clone https://github.com/phenomenal-ab/PyDownloader.git`
+- Cloning the repo in your $HOME <br/>
+`git clone https://github.com/phenomenal-ab/PyDownloader.git $HOME`
 
 - Make an alias to the program in your BASHRC like <br/>
 `alias pydm='python3 $HOME/PyDownloader/main.py'   # Considering you cloned the repository in your $HOME`
