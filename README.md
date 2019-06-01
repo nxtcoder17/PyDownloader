@@ -13,11 +13,11 @@ you get your file downloaded, faster than other downloaders.
     >> `pip install requests` should do installation of Python Requests
 
 ### Executing the Downloader
->> Make an alias to the program in your BASHRC
-```sh
-# filename: $HOME/.bashrc
-alias pydm='python3 $HOME/PyDownloader/main.py'     # Considering you clone the Repository in your HOME
-```
+- Cloning it in your $HOME <br/>
+`git clone https://github.com/phenomenal-ab/PyDownloader.git`
+
+- Make an alias to the program in your BASHRC like <br/>
+`alias pydm='python3 $HOME/PyDownloader/main.py'   # Considering you cloned the repository in your $HOME`
 
 You need to pass <b>2</b> Arguments to the PyDownloader thing 
 <pre>
