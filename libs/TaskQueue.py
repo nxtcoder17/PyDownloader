@@ -26,7 +26,7 @@ def generate_queue(unit, total, offsets = None):
         else:
             que.put((counter, {'range': f"bytes={start}-{start + unit - 1}"}))
             # print(f"[ CURRENT ]: range: bytes={start}-{start + unit - 1}")
-            print()
+            # print()
 
         start += unit
         counter += 1

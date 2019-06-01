@@ -22,18 +22,18 @@ def generate(dir, total):
         result = "["
         if total is not None:
             percentage = (size()/total) * 100
-            result += pprint("green", f"{'#' * int(percentage // 2)}") 
+            result += pprint("green", f"{'#' * int(percentage // 2)}")
             result += pprint("cyan", f"{'.' * int(50 - (percentage // 2))}")
             result += "]"
 
             if size() != total:
-                result += "({:3.2f} %), ({:6.2f} MB) ".format(percentage, size()/1024/1024)
+                result += "({:3.2f} %) ({:4.2f} MB) ".format(percentage, size()/1024/1024)
             elif (size() == total):
                 result += "(100.00 %)"
         else:
             result += pprint ("green", f"{'#' * 50}")
             result += "]"
-            result += "(Undetermined)"
+            result += " (Undetermined) ({:4.2f} MB})".format (size()/1024/1024);
         # result += "#" * int(percentage // 2) + "." * int(50 - (percentage // 2))
         print(result, end='\r')
-        time.sleep(0.3)
+        time.sleep(0.1)
