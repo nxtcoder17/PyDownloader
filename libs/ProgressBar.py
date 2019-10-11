@@ -18,6 +18,7 @@ pprint = lambda x, y: Color.bold[x] + y + Color.neutral
 def generate(dir, total):
     size = lambda : sum(os.path.getsize(dir + '/' + x) for x in os.listdir(dir))
 
+    print ("[" + pprint("green", "Download-Size") + "]: " + pprint("yellow", "{:.2f} MBs".format(total/1024/1024)))
     while True:
         result = "["
         if total is not None:
@@ -33,7 +34,7 @@ def generate(dir, total):
         else:
             result += pprint ("green", f"{'#' * 50}")
             result += "]"
-            result += " (Undetermined) ({:4.2f} MB})".format (size()/1024/1024);
+            result += " (Undetermined) ({:4.2f} MB)".format (size()/1024/1024);
         # result += "#" * int(percentage // 2) + "." * int(50 - (percentage // 2))
         print(result, end='\r')
         time.sleep(0.1)
